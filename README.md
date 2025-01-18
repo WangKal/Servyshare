@@ -17,7 +17,7 @@ Flexible pricing options: daily/monthly subscriptions or pay-per-use.
 
 Installation
 
-1. Download the APK file from this link.
+1. Download the APK file from this link.https://raw.githubusercontent.com/WangKal/Servyshare/refs/heads/main/app-debug.apk
 
 
 2. Enable "Install from Unknown Sources" on your Android device:
