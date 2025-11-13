@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Management</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 50px; }
+  button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+  .danger { background-color: #e74c3c; color: white; border: none; }
+  .update { background-color: #3498db; color: white; border: none; }
+</style>
+</head>
+<body>
+
+<h2>Account Management</h2>
+
+<p>Manage your account or delete it permanently.</p>
+
+<!-- Update Account Section -->
+<h3>Update Account</h3>
+<form id="updateForm">
+  <label>
+    Name:<br>
+    <input type="text" id="name" placeholder="Enter your name">
+  </label><br><br>
+  <label>
+    Email:<br>
+    <input type="email" id="email" placeholder="Enter your email">
+  </label><br><br>
+  <button type="button" class="update" onclick="updateAccount()">Update Account</button>
+</form>
+
+<hr>
+
+<!-- Delete Account Section -->
+<h3>Delete Account</h3>
+<p>Warning: This action is irreversible.</p>
+<button class="danger" onclick="deleteAccount()">Delete Account</button>
+
+<script>
+function updateAccount() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+
+  if(!name || !email) {
+    alert('Please fill out all fields.');
+    return;
+  }
+
+  // TODO: Connect to backend API to update user info
+  alert(`Account updated:\nName: ${name}\nEmail: ${email}`);
+}
+
+function deleteAccount() {
+  const confirmed = confirm("Are you sure you want to delete your account permanently?");
+  if(confirmed) {
+    // TODO: Connect to backend API to delete account
+    alert("Your account has been deleted.");
+  }
+}
+</script>
+
+</body>
+</html>
