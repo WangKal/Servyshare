@@ -1,6 +1,45 @@
 import { Download as DownloadIcon, Github, Smartphone, Shield } from "lucide-react";
+import { Button } from "./ui/button";
 
 export function Download() {
+
+
+
+const downloadExtensionZip = async () => {
+  try {
+    
+
+    const response = await fetch(
+      "https://servitium.onrender.com/api/servyshare/download/extension/"
+    );
+
+    if (!response.ok) throw new Error("Download failed");
+
+    const blob = await response.blob();
+
+    const url = URL.createObjectURL(
+      new Blob([blob], { type: "application/zip" })
+    );
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ServyShare.apk";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+   
+  } catch (err) {
+    console.error(err);
+    alert("Failed to download extension");
+  } finally {
+ 
+  }
+};
+
+
+
   return (
     <section id="download" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -42,14 +81,14 @@ export function Download() {
                   </div>
                 </div>
 
-                <a 
-                  href="https://github.com/servitium-enterprise/servyshare/releases/latest/download/servyshare.apk"
+                <Button 
+                  onClick={()=>downloadExtensionZip() }
                   className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:opacity-90 transition-opacity font-medium"
                   download
                 >
                   <DownloadIcon className="h-5 w-5" />
                   Download APK
-                </a>
+                </Button>
 
                 <p className="text-xs text-muted-foreground">
                   By downloading, you agree to our terms of service and privacy policy

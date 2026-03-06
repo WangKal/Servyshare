@@ -12,21 +12,17 @@ export function HowItWorks() {
     },
     {
       number: "3",
-      title: "Add Staff Members",
-      description: "Invite your team members, delivery personnel, or staff who need transaction access."
+      title: "Create a Group and Add Staff Members",
+      description: "Create a group then Invite your team members, delivery personnel, or staff who need transaction access."
     },
     {
       number: "4",
       title: "Configure Permissions",
       description: "Set whether staff see all transactions or use search. Configure auto-delete timers (default 24 hours)."
     },
+
     {
       number: "5",
-      title: "Grant M-Pesa Access",
-      description: "Allow the app to read M-Pesa till messages (not private transactions) or set up Daraja API."
-    },
-    {
-      number: "6",
       title: "Start Processing",
       description: "Staff can now view payment confirmations in real-time and claim transactions for accountability."
     }
