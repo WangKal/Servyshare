@@ -1,47 +1,44 @@
+import { useState } from "react";
 import { Download as DownloadIcon, Github, Smartphone, Shield } from "lucide-react";
 import { Button } from "./ui/button";
 
 export function Download() {
+  const [isDownloading, setIsDownloading] = useState(false);
 
+  const downloadExtensionZip = async () => {
+    if (isDownloading) return; // prevent multiple clicks
 
+    try {
+      setIsDownloading(true);
 
-const downloadExtensionZip = async () => {
-  try {
-    
+      const response = await fetch(
+        "https://servitium.onrender.com/api/servyshare/download/extension/"
+      );
 
-    const response = await fetch(
-      "https://servitium.onrender.com/api/servyshare/download/extension/"
-    );
+      if (!response.ok) throw new Error("Download failed");
 
-    if (!response.ok) throw new Error("Download failed");
+      const blob = await response.blob();
+      const url = URL.createObjectURL(new Blob([blob], { type: "application/zip" }));
 
-    const blob = await response.blob();
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "ServyShare.apk";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
 
-    const url = URL.createObjectURL(
-      new Blob([blob], { type: "application/zip" })
-    );
+      URL.revokeObjectURL(url);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "ServyShare.apk";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    URL.revokeObjectURL(url);
-   
-  } catch (err) {
-    console.error(err);
-    alert("Failed to download extension");
-  } finally {
- 
-  }
-};
-
-
+    } catch (err) {
+      console.error(err);
+      alert("Failed to download extension");
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
-    <section id="download" className="py-20 bg-background">
+  <section id="download" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -81,14 +78,19 @@ const downloadExtensionZip = async () => {
                   </div>
                 </div>
 
-                <Button 
-                  onClick={()=>downloadExtensionZip() }
-                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:opacity-90 transition-opacity font-medium"
-                  download
-                >
-                  <DownloadIcon className="h-5 w-5" />
-                  Download APK
-                </Button>
+          <Button
+            onClick={downloadExtensionZip}
+            disabled={isDownloading}
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-lg font-medium transition-all
+              ${isDownloading ? "bg-gray-400 cursor-not-allowed" : "bg-primary text-primary-foreground hover:opacity-90"}`}
+          >
+            {isDownloading && (
+              <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            )}
+            <DownloadIcon className="h-5 w-5" />
+            {isDownloading ? "Downloading..." : "Download APK"}
+          </Button>
+                 
 
                 <p className="text-xs text-muted-foreground">
                   By downloading, you agree to our terms of service and privacy policy
